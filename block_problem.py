@@ -12,77 +12,113 @@ temp_start_stack = []
 final_state = final_state.split(" ")
 start_state = start_state.split(" ")
 
+# loop each tower in final state
 for i in range(len(final_state)):
-    # print len(final_state[i])
-    if len(final_state[i]) == 1:
-        temp_stack = {}
-        # ontable = "ontable("+final_state[i]+")"
-        # clear = "clear("+final_state[i]+ ")"
-        temp_stack.update([ ('type', 'action') , ('name', 'ontable') , ('params', final_state[i])] )
-        combine_tstack.append(temp_stack)
-        temp_stack = {}
-        temp_stack.update([('type', 'action'), ('name', 'clear'), ('params', final_state[i])])
-        combine_tstack.append(temp_stack)
+    # make this easier to refer
+    tower = final_state[i]
+    tower_height = len(tower)
+    # when tower has only 1 block
+    # this if part can be handled outside the loop
+    if tower_height == 1:
+        combine_tstack.append({
+          'type': "action",
+          'name': "ontable",
+          'params': tower[0]
+        })
+        #temp_stack = {}
+        #temp_stack.update([('type', 'action'), ('name', 'clear'), ('params', tower[0])])
+        combine_tstack.append({
+          'type': "action",
+          'name': "clear",
+          'params': tower[0]
+        })
     else:
-        for j in range(len(final_state[i])):
-            if j == 0:
-                temp_stack = {}
-                # clear = "clear(" + final_state[i][j] + ")"
-                temp_stack.update([('type', 'predicate'), ('name', 'on'),
-                                    ('params', final_state[i][j] + "," + final_state[i][j + 1])])
-                combine_tstack.append(temp_stack)
-                # on = "on("+final_state[i][j]+","+final_state[i][j+1]+")"
-                temp1_stack = {}
+        # handle bottom block
+        temp_stack = {
+          'type': "predicate",
+          'name': "ontable",
+          'params': tower[0]
+        }
+        # clear = "clear(" + tower[j] + ")"
+        combine_tstack.append(temp_stack)
+        # on = "on("+tower[j]+","+tower[j+1]+")"
+        
+        # handle top block
+        temp1_stack = {
+          'type': "predicate",
+          'name': "clear",
+          'params': tower[-1]
+        }
+        combine_tstack.append(temp1_stack)
 
-                temp1_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', final_state[i][j])])
-                combine_tstack.append(temp1_stack)
-                # temp_stack.append(on)
-                # temp_stack.append(clear)
-            elif j != len(final_state[i])-1:
-                temp_stack = {}
-                # on = "on(" + final_state[i][j-1] + "," + final_state[i][j] + ")"
-                # ontable = ontable = "ontable("+final_state[i][j]+")"
-                temp_stack.update([('type', 'predicate'), ('name', 'on'),
-                                   ('params', final_state[i][j] + "," + final_state[i][j + 1])])
-                combine_tstack.append(temp_stack)
-            else:
-                temp1_stack = {}
-                temp1_stack.update([('type', 'predicate'), ('name', 'ontable'), ('params', final_state[i][j])])
-                combine_tstack.append(temp1_stack)
+        # loop each block in tower, excluding the first block
+        for j in range(1, len(tower)):
+          temp_stack = {
+            'type': "predicate",
+            'name': "on",
+            'params': tower[j] + "," + tower[j-1]
+          }
+          # on = "on(" + tower[j-1] + "," + tower[j] + ")"
+          # ontable = ontable = "ontable("+tower[j]+")"
+          combine_tstack.append(temp_stack)
 stack.append(combine_tstack)
 for i in combine_tstack:
     stack.append(i)
+
 temp_stack = {}
 temp1_stack = {}
-for i in range(len(start_state)):
-    if len(start_state[i]) == 1:
-        # ontable = "ontable("+start_state[i]+")"
-        # clear = "clear("+start_state[i]+ ")"
-        temp_stack = {}
-        temp_stack.update([('type', 'predicate'), ('name', 'ontable'), ('params', start_state[i])])
-        temp_start_stack.append(temp_stack)
-        temp_stack = {}
-        temp_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', start_state[i])])
-        temp_start_stack.append(temp_stack)
 
+# loop each tower in start state
+for i in range(len(start_state)):
+    # make this easier to refer
+    tower = start_state[i]
+    tower_height = len(tower)
+    # when tower has only 1 block
+    # this if part can be handled outside the loop
+    if tower_height == 1:
+        temp_start_stack.append({
+          'type': "action",
+          'name': "ontable",
+          'params': tower[0]
+        })
+        #temp_stack = {}
+        #temp_stack.update([('type', 'action'), ('name', 'clear'), ('params', tower[0])])
+        temp_start_stack.append({
+          'type': "action",
+          'name': "clear",
+          'params': tower[0]
+        })
     else:
-        for j in range(len(start_state[i])):
-            if j == 0:
-                temp_stack = {}
-                temp_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', start_state[i][j])])
-                temp_start_stack.append(temp_stack)
-                temp1_stack = {}
-                temp1_stack.update([('type', 'predicate'), ('name', 'on'),
-                                    ('params', start_state[i][j] + "," + start_state[i][j + 1])])
-                temp_start_stack.append(temp1_stack)
-            elif j == len(start_state[i])-1:
-                temp1_stack = {}
-                temp1_stack.update([('type', 'predicate'), ('name', 'ontable'), ('params', start_state[i][j])])
-                temp_start_stack.append(temp1_stack)
-            else:
-                temp_stack = {}
-                temp_stack.update([('type', 'predicate'), ('name', 'on'), ('params', start_state[i][j] + "," + start_state[i][j+1])])
-                temp_start_stack.append(temp_stack)
+        # handle bottom block
+        temp_stack = {
+          'type': "predicate",
+          'name': "ontable",
+          'params': tower[0]
+        }
+        # clear = "clear(" + tower[j] + ")"
+        temp_start_stack.append(temp_stack)
+        # on = "on("+tower[j]+","+tower[j+1]+")"
+        
+        # handle top block
+        temp1_stack = {
+          'type': "predicate",
+          'name': "clear",
+          'params': tower[-1]
+        }
+        temp_start_stack.append(temp1_stack)
+
+        # loop each block in tower, excluding the first block
+        for j in range(1, len(tower)):
+          temp_stack = {
+            'type': "predicate",
+            'name': "on",
+            'params': tower[j] + "," + tower[j-1]
+          }
+          # on = "on(" + tower[j-1] + "," + tower[j] + ")"
+          # ontable = ontable = "ontable("+tower[j]+")"
+          temp_start_stack.append(temp_stack)
+
+
 temp_stack = {}
 temp1_stack = {}
 counter = 0
@@ -102,7 +138,8 @@ counter_pickup  =0
 counter_putdown  =0
 counter_holding  =0
 if start_state == final_state:
-    print "No Change"
+    print ("No Change")
+
 while len(stack) > 0:
     if stack[-1] not in temp_start_stack:
         # print stack[-1]
