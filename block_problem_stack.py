@@ -262,3 +262,14 @@
 #         ele = stack[-1].replace("holding(", "")
 #         ele = ele.replace(")", "")
 #         ele = ele.replace(",", "")
+
+temp_list = [{'params': '1', 'type': 'predicate', 'name': 'ontable'}, {'params': '1', 'type': 'predicate', 'name': 'clear'}, {'params': '3', 'type': 'predicate', 'name': 'clear'}, {'params': '2', 'type': 'predicate', 'name': 'ontable'}, {'params': '2', 'type': 'predicate', 'name': 'clear'}, {'params': '3', 'type': 'predicate', 'name': 'ontable'}]
+
+
+for i in range(len(temp_list)):
+    while '2' in temp_list[i]['params']:
+        print temp_list.pop(i)
+
+# print temp_list.pop(4)
+# print temp_list.pop(3)
+# print temp_list
