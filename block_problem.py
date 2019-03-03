@@ -1,8 +1,18 @@
 
-final_state = '123'
-start_state = '3 2 1'
+
+
+
+"Example: left is "
+
+
+
+final_state = '123456789'
+start_state = '8761 952 43'
 final_state = final_state.split(" ")
 start_state = start_state.split(" ")
+
+
+
 
 
 stack = []
@@ -16,8 +26,6 @@ combine_tstack = []
 for i in range(len(final_state)):
     if len(final_state[i]) == 1:
         temp_stack = {}
-        # ontable = "ontable("+final_state[i]+")"
-        # clear = "clear("+final_state[i]+ ")"
         temp_stack.update([ ('type', 'action') , ('name', 'ontable') , ('params', final_state[i])] )
         combine_tstack.append(temp_stack)
         temp_stack = {}
@@ -201,10 +209,21 @@ while len(stack) >0:
                             new_value = i['params']
                             temp_stack = {}
                             temp_stack.update([('type', 'action'), ('name', 'unstack'),('params', new_value)])
-
-
-
+                new_value2 = temp_stack["params"]
                 stack.append(temp_stack)
+                temp_stack = {}
+                temp2_stack = {}
+                temp3_stack = {}
+
+                temp_stack.update([('type', 'action'), ('name', 'armempty'), ('params', "")])
+                temp1_stack.update([('type', 'action'), ('name', 'on'), ('params', new_value2)])
+                temp2_stack.update([('type', 'action'), ('name', 'clear'), ('params', new_value2[0])])
+                combine_tstack.append(temp_stack)
+                combine_tstack.append(temp1_stack)
+                combine_tstack.append(temp2_stack)
+                stack.append(combine_tstack)
+                for i in combine_tstack:
+                    stack.append(i)
 
 
             elif stack[-1]['name'] == 'holding':
@@ -258,7 +277,7 @@ while len(stack) >0:
             stack.pop()
         elif new_name == 'pickup':
             arm.append(new_value)
-            print new_value
+            # print new_value
             # print new_value
             for i in temp_start_stack:
                 if i['name'] == 'clear' and i['params'] == new_value:
@@ -279,7 +298,7 @@ while len(stack) >0:
                     # print "in here"
                     ele_found = i
                     temp_start_stack.remove(i)
-            print ele_found
+            # print ele_found
             # temp_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', new_value)])
             # temp_start_stack.append(temp_stack)
             stack.pop()
@@ -321,8 +340,8 @@ while len(stack) >0:
     counter += 1
 
 # print unstackfrom
-print temp_start_stack
-print "Stack",stack
-print combine_tstack
+# print temp_start_stack
+# print "Stack",stack
+# print combine_tstack
 print "Steps: ",steps
-print arm
+# print arm
