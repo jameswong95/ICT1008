@@ -1,20 +1,11 @@
-
-
-
-
 "Example: left is for 10 digits"
 
 
 
-final_state = '123456789'
-start_state = '8761 952 43'
+final_state = '913425'
+start_state = '3 19 25 4'
 final_state = final_state.split(" ")
 start_state = start_state.split(" ")
-
-
-
-
-
 stack = []
 arm = []
 temp_stack = {}
@@ -35,16 +26,12 @@ for i in range(len(final_state)):
         for j in range(len(final_state[i])):
             if j == 0:
                 temp_stack = {}
-                # clear = "clear(" + final_state[i][j] + ")"
                 temp_stack.update([('type', 'predicate'), ('name', 'on'),
                                     ('params', final_state[i][j] + "," + final_state[i][j + 1])])
                 combine_tstack.append(temp_stack)
-                # on = "on("+final_state[i][j]+","+final_state[i][j+1]+")"
                 temp1_stack = {}
                 temp1_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', final_state[i][j])])
                 combine_tstack.append(temp1_stack)
-                # temp_stack.append(on)
-                # temp_stack.append(clear)
             elif j != len(final_state[i])-1:
                 temp_stack = {}
                 temp_stack.update([('type', 'predicate'), ('name', 'on'),
@@ -63,6 +50,7 @@ for i in combine_tstack:
 temp_start_stack = []
 counter_test = 1
 # loop each tower in start state
+counter = 0
 while counter_test == 1:
     for i in range(len(start_state)):
         if len(start_state[i]) == 1:
@@ -91,9 +79,6 @@ while counter_test == 1:
                     temp_stack.update([('type', 'predicate'), ('name', 'on'), ('params', start_state[i][j] + "," + start_state[i][j+1])])
                     temp_start_stack.append(temp_stack)
     counter_test = 0
-counter = 0
-counter_putdown  =0
-counter_holding  =0
 if start_state == final_state:
     print ("No Change")
 while len(stack) >0:
@@ -177,28 +162,14 @@ while len(stack) >0:
                             unstackfrom =  i['params'][2]
                         if i['name'] == 'on' and i['params'][2] == new_value:
                             unstackfrom =  i['params'][0]
-                    # temp1_stack.update([('type', 'action'), ('name', 'putdown'), ('params', new_value)])
                     temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', "")])
-                    # temp3_stack.update([('type', 'predicate'), ('name', 'on'), ('params', new_value + "," + unstackfrom)])
-                    # temp2_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', new_value)])
-                    # combine_tstack.append(temp1_stack)
                     combine_tstack.append(temp_stack)
-                    # combine_tstack.append(temp3_stack)
-                    # combine_tstack.append(temp2_stack)
                     temp1_stack.update([('type', 'action'), ('name', 'unstack'), ('params', new_value + "," + unstackfrom)])
-
                     temp_stack = {}
                     temp3_stack = {}
-
-
-                    # print stack
                     for i in combine_tstack:
                         stack.append(i)
                     stack.append(temp1_stack)
-                    # temp1_stack = {}
-                    # temp1_stack.update([('type', 'action'), ('name', 'pickup'), ('params', new_value)])
-                    # stack.append(temp1_stack)
-                    # print stack
             elif stack[-1]['name'] == 'clear':
                 current_stack = stack[-1]
                 new_value = current_stack['params']
@@ -224,15 +195,11 @@ while len(stack) >0:
                 stack.append(combine_tstack)
                 for i in combine_tstack:
                     stack.append(i)
-
-
             elif stack[-1]['name'] == 'holding':
                 current_stack = stack[-1]
                 new_value = current_stack['params']
                 if arm[0] == new_value:
                     stack.pop()
-                # print "try ", stack
-
             elif stack[-1]['name'] == 'armempty':
                 current_stack = stack[-1]
                 temp_stack ={}
@@ -243,9 +210,7 @@ while len(stack) >0:
                 if len(arm) == 0:
                     stack.pop()
                 else:
-                    # print "arm"
                     combine_tstack = []
-
                     temp1_stack.update([('type', 'action'), ('name', 'putdown'), ('params',  arm_value)])
                     stack.append(temp1_stack)
                     temp_stack.update([('type', 'predicate'), ('name', 'holding'), ('params', arm_value)])
@@ -253,7 +218,6 @@ while len(stack) >0:
                     stack.append(combine_tstack)
                     for i in combine_tstack:
                         stack.append(i)
-
     else:
         current_stack = stack[-1]
         new_name  = current_stack['name']
@@ -277,30 +241,18 @@ while len(stack) >0:
             stack.pop()
         elif new_name == 'pickup':
             arm.append(new_value)
-            # print new_value
-            # print new_value
             for i in temp_start_stack:
                 if i['name'] == 'clear' and i['params'] == new_value:
-                    # print "in here"
                     ele_found = i
                     temp_start_stack.remove(i)
             for i in temp_start_stack:
-                # print i
-                # print i['params']
                 if i['name'] == 'ontable' and i['params'] == new_value:
-                    # print "in here"
                     ele_found = i
                     temp_start_stack.remove(i)
             for i in temp_start_stack:
-                # print i
-                # print i['params']
                 if i['name'] == 'on' and i['params'][0] == new_value:
-                    # print "in here"
                     ele_found = i
                     temp_start_stack.remove(i)
-            # print ele_found
-            # temp_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', new_value)])
-            # temp_start_stack.append(temp_stack)
             stack.pop()
             steps.append(current_stack)
         elif new_name == 'stack':
@@ -331,17 +283,6 @@ while len(stack) >0:
             stack.pop()
             steps.append(current_stack)
             arm.pop()
-    #         arm
-    # # do
-    # action
-    # then
-    # pop
-
     counter += 1
 
-# print unstackfrom
-# print temp_start_stack
-# print "Stack",stack
-# print combine_tstack
 print "Steps: ",steps
-# print arm
