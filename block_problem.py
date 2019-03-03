@@ -2,7 +2,7 @@
 
 
 
-"Example: left is "
+"Example: left is for 10 digits"
 
 
 
