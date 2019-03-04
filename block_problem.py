@@ -1,24 +1,7 @@
 "Example: left is for 10 digits"
 []
 #does not work:
-# final_state = '1 3 2 6 54'
-# start_state = '23 1 654'
 
-# final_state = '6 32 451'
-# start_state = '2 31654'
-
-# final_state = '6 32 45 1'
-# start_state = '2 316 54'
-
-# final_state = '6 3245 1'
-# start_state = '2 316 54'
-
-# final_state = '63 245 1'
-# start_state = '2 316 54'
-
-
-# final_state = '63 24 5 1'
-# start_state = '231654'
 
 #Able to work:
 # final_state = '123'
@@ -28,8 +11,8 @@
 # start_state = '2 3 16 5 4'
 
 #Current Stack
-final_state = '123'
-start_state = '1 32'
+final_state = '6 23 451'
+start_state = '2 31654'
 
 
 final_state = final_state.split(" ")
@@ -111,9 +94,8 @@ if start_state == final_state:
     print ("No Change")
 while len(stack) >0:
     list_counter = 0
-
     combine_tstack = []
-
+    unstackfrom =""
     if type(stack[-1]) is list:
         list_counter = 0
         ele_notfound = ""
@@ -184,15 +166,32 @@ while len(stack) >0:
                     current_stack = stack[-1]
                     new_value = current_stack['params']
                     # print new_value
-                    for i in temp_start_stack:
-                        # print i['params'][0]
-                        if i['name'] == 'on' and i['params'][0] == new_value:
-                            unstackfrom =  i['params'][2]
-                        if i['name'] == 'on' and i['params'][2] == new_value:
-                            unstackfrom =  i['params'][0]
-                    temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', new_value)])
-                    combine_tstack.append(temp_stack)
-                    temp1_stack.update([('type', 'action'), ('name', 'unstack'), ('params', new_value + "," + unstackfrom)])
+
+                    i = 0
+                    while not unstackfrom and i < len(temp_start_stack):
+                        if temp_start_stack[i]['name'] == 'on' and temp_start_stack[i]['params'][2] == new_value:
+                            unstackfrom =  temp_start_stack[i]['params'][0]
+                            temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', new_value)])
+                            combine_tstack.append(temp_stack)
+                            temp1_stack.update(
+                                [('type', 'action'), ('name', 'unstack'), ('params', unstackfrom + "," + new_value)])
+
+                        elif temp_start_stack[i]['name'] == 'on' and temp_start_stack[i]['params'][0] == new_value:
+                            unstackfrom =  temp_start_stack[i]['params'][2]
+                            temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', new_value)])
+                            combine_tstack.append(temp_stack)
+                            temp1_stack.update(
+                                [('type', 'action'), ('name', 'unstack'), ('params', new_value + "," + unstackfrom)])
+                        i += 1
+                    # for i in temp_start_stack:
+                    #     # print i['params'][0]
+                    #     if i['name'] == 'on' and i['params'][2] == new_value:
+                    #         unstackfrom =  i['params'][0]
+                    #
+                    #     if i['name'] == 'on' and i['params'][0] == new_value:
+                    #         unstackfrom =  i['params'][2]
+
+
                     temp_stack = {}
                     temp3_stack = {}
                     for i in combine_tstack:
@@ -201,6 +200,9 @@ while len(stack) >0:
             elif stack[-1]['name'] == 'clear':
                 current_stack = stack[-1]
                 new_value = current_stack['params']
+                temp_stack = {}
+                temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', new_value)])
+                stack.append(temp_stack)
                 temp_stack = {}
                 for i in temp_start_stack:
                     if i['name'] == 'on':
