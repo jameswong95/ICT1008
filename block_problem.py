@@ -1,9 +1,9 @@
 "Example: left is for 10 digits"
+[]
 
+start_state = '123'
+final_state = '1 23'
 
-
-final_state = '913425'
-start_state = '3 19 25 4'
 final_state = final_state.split(" ")
 start_state = start_state.split(" ")
 stack = []
@@ -17,10 +17,10 @@ combine_tstack = []
 for i in range(len(final_state)):
     if len(final_state[i]) == 1:
         temp_stack = {}
-        temp_stack.update([ ('type', 'action') , ('name', 'ontable') , ('params', final_state[i])] )
+        temp_stack.update([ ('type', 'predicate') , ('name', 'ontable') , ('params', final_state[i])] )
         combine_tstack.append(temp_stack)
         temp_stack = {}
-        temp_stack.update([('type', 'action'), ('name', 'clear'), ('params', final_state[i])])
+        temp_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', final_state[i])])
         combine_tstack.append(temp_stack)
     else:
         for j in range(len(final_state[i])):
@@ -186,9 +186,9 @@ while len(stack) >0:
                 temp2_stack = {}
                 temp3_stack = {}
 
-                temp_stack.update([('type', 'action'), ('name', 'armempty'), ('params', "")])
-                temp1_stack.update([('type', 'action'), ('name', 'on'), ('params', new_value2)])
-                temp2_stack.update([('type', 'action'), ('name', 'clear'), ('params', new_value2[0])])
+                temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', "")])
+                temp1_stack.update([('type', 'predicate'), ('name', 'on'), ('params', new_value2)])
+                temp2_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', new_value2[0])])
                 combine_tstack.append(temp_stack)
                 combine_tstack.append(temp1_stack)
                 combine_tstack.append(temp2_stack)
