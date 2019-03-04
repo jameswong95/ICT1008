@@ -1,8 +1,36 @@
 "Example: left is for 10 digits"
 []
+#does not work:
+# final_state = '1 3 2 6 54'
+# start_state = '23 1 654'
 
-start_state = '123'
-final_state = '1 23'
+# final_state = '6 32 451'
+# start_state = '2 31654'
+
+# final_state = '6 32 45 1'
+# start_state = '2 316 54'
+
+# final_state = '6 3245 1'
+# start_state = '2 316 54'
+
+# final_state = '63 245 1'
+# start_state = '2 316 54'
+
+
+# final_state = '63 24 5 1'
+# start_state = '231654'
+
+#Able to work:
+# final_state = '123'
+# start_state = '1 32'
+
+# final_state = '63 245 1'
+# start_state = '2 3 16 5 4'
+
+#Current Stack
+final_state = '123'
+start_state = '1 32'
+
 
 final_state = final_state.split(" ")
 start_state = start_state.split(" ")
@@ -162,7 +190,7 @@ while len(stack) >0:
                             unstackfrom =  i['params'][2]
                         if i['name'] == 'on' and i['params'][2] == new_value:
                             unstackfrom =  i['params'][0]
-                    temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', "")])
+                    temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', new_value)])
                     combine_tstack.append(temp_stack)
                     temp1_stack.update([('type', 'action'), ('name', 'unstack'), ('params', new_value + "," + unstackfrom)])
                     temp_stack = {}
@@ -186,7 +214,7 @@ while len(stack) >0:
                 temp2_stack = {}
                 temp3_stack = {}
 
-                temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', "")])
+                temp_stack.update([('type', 'predicate'), ('name', 'armempty'), ('params', new_value[0])])
                 temp1_stack.update([('type', 'predicate'), ('name', 'on'), ('params', new_value2)])
                 temp2_stack.update([('type', 'predicate'), ('name', 'clear'), ('params', new_value2[0])])
                 combine_tstack.append(temp_stack)
