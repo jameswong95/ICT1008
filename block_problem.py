@@ -8,8 +8,8 @@
 # start_state = '2 3 16 5 4'
 
 #Current Stack
-final_state = '321'
-start_state = '13 2'
+final_state = '123'
+start_state = '1 32'
 
 
 final_state = final_state.split(" ")
@@ -315,4 +315,16 @@ else:
                 arm.pop()
         counter += 1
 
-print "Steps: ",steps
+# print "Steps: ",steps
+for i in steps:
+    if i['name'] == 'putdown':
+        print i['name'], ",", i['params'],"on table"
+    elif i['name'] == 'pickup':
+        print i['name'], ",", i['params'],"from table"
+    else:
+        if i['name'] == 'unstack':
+            print i['name'], i['params'][0] ,"from", i['params'][2]
+        else:
+            print i['name'], i['params'][0], "to", i['params'][2]
+    # print temp_start_stack
+# | A , B | |C |
