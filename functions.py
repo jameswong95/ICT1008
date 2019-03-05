@@ -24,13 +24,12 @@ class armFunction:
             # check if block a is clear
             if armFunction.clear(a):
                 # check if arm is empty
-                if armFunction.Armempty():
+                if armFunction.armempty():
                     # remove a from stack
                     for stack in tableStack:
                         if stack.peek() is a:
                             stack.pop()
-                            armFunction.armHolding = True
-                            armFunction.onHand = a
+                            armFunction.holding(a)
                             armFunction.action_counter += 1
                             break
         return tableStack
@@ -55,8 +54,7 @@ class armFunction:
                 for stack in tableStack:
                     if stack.peek() is b:
                         stack.push(a)
-                        armFunction.armHolding = False
-                        armFunction.onHand = ""
+                        armFunction.holding("")
                         armFunction.action_counter += 1
                         break
         return tableStack
@@ -71,12 +69,11 @@ class armFunction:
             # check if a is clear
             if armFunction.clear(a):
                 # check if arm is empty
-                if armFunction.armHolding is False:
+                if armFunction.armempty():
                     for stack in tableStack:
                         if stack.peek() is a:
                             stack.pop()
-                            armFunction.armHolding = True
-                            armFunction.onHand = a
+                            armFunction.holding(a)
                             armFunction.action_counter += 1
                             break
 
@@ -91,12 +88,11 @@ class armFunction:
                 pass
 
         # PUT DOWN START
-        if armFunction.onHand is a and armFunction.armHolding is True:
+        if armFunction.onHand is a and armFunction.armempty() is False:
             for stack in tableStack:
                 if len(stack) is 0:
                     stack.push(a)
-                    armFunction.armHolding = False
-                    armFunction.onHand = ""
+                    armFunction.holding("")
                     armFunction.action_counter += 1
                     break
         return tableStack
@@ -134,7 +130,7 @@ class armFunction:
         armFunction.onHand = a
         return armFunction.holding
 
-    def Armempty(self):
+    def armempty(self):
         print("Arm is Empty")
         if armFunction.armHolding is False:
             return True

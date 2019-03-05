@@ -5,8 +5,11 @@ import time
 #input_start_state = raw_input("Enter start state: ")
 #input_goal_state = raw_input("Enter goal state: ")
 
-input_init_state = "B ACDE F G H"  #Start State
-input_goal_state = "DC BA F E H G" #Goal State
+#input_init_state = "BI ACDE FKL GJ HM"  #Start State
+#input_goal_state = "ABC DEF GHM IJKL" #Goal State
+
+input_init_state = "BI ACDE FKL GJ HM"  #Start State
+input_goal_state = "ABC DEF GHM IJ KL" #Goal State
 
 
 if input_init_state is input_goal_state:
@@ -14,9 +17,8 @@ if input_init_state is input_goal_state:
 else:
     # create table obj
     # create the tables with stacks and blocks
-    final_size = len(input_goal_state.split())
-    start_table = table.createTable(input_init_state, final_size)
-    goal_table = table.createTable(input_goal_state, final_size)
+    start_table = table.createTable(input_init_state)
+    goal_table = table.createTable(input_goal_state)
 
     print start_table
 
@@ -24,7 +26,7 @@ else:
     a1_start = time.time()  # start timer
 
     # code here
-    # table.classicalPlanning(start_table, goal_table)
+    table.classicalPlanning(start_table, goal_table)
 
     a1_end = time.time()  # end timer
     a1_timeTaken = a1_end - a1_start  # total time taken
