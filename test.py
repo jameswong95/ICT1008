@@ -5,12 +5,17 @@ import time
 #input_start_state = raw_input("Enter start state: ")
 #input_goal_state = raw_input("Enter goal state: ")
 
+# same amount of stacks example
+#input_init_state = "AC BF ED"  #Start State
+#input_goal_state = "AB CD EF" #Goal State
+
+# init > goal
 #input_init_state = "BI ACDE FKL GJ HM"  #Start State
 #input_goal_state = "ABC DEF GHM IJKL" #Goal State
 
-input_init_state = "BI ACDE FKL GJ HM"  #Start State
-input_goal_state = "ABC DEF GHM IJ KL" #Goal State
-
+# init < goal
+input_init_state = "ABC DEF GHM IJKL" #Start State
+input_goal_state = "BI ACDE FKL GJ HM"  #Goal State
 
 if input_init_state is input_goal_state:
     print("Start state and goal state are the same")
