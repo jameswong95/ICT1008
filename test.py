@@ -36,5 +36,7 @@ else:
     goal_table = table.createTable(input_goal_state)
 
     # code here
-    test = table.alt(start_table, goal_table)
-    print test
+    dict = table.alt(start_table, goal_table)
+
+    for k, v in dict.items():
+        print(k, v)
