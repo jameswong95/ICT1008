@@ -74,8 +74,8 @@ class armFunction:
         # CONSTRAINTS: a != table
         if self.onHand is a and self.armempty() is False:
             stack.push(a)
-            armFunction.holding("")
-            armFunction.action_counter += 1
+            self.holding("")
+            self.action_counter += 1
 
         return stack
 

@@ -7,23 +7,23 @@ import time
 
 # <-- Top | Bottom -->
 
-# simple example
-input_init_state = "CA B D"  #Start State
-input_goal_state = "DCBA" #Goal State
+# test 1: simple example
+#input_init_state = "CA B D"  #Start State
+#input_goal_state = "DCBA" #Goal State
 
-# same amount of stacks example
-#input_init_state = "AC BF ED"  #Start State
-#input_goal_state = "AB CD EF" #Goal State
+# test 2: same amount of stacks example
+#input_init_state = "CA FB DE"  #Start State
+#input_goal_state = "BA DC FE" #Goal State
 
-# init > goal example
+# test 3: init > goal example
 #input_init_state = "BI ACDE FKL GJ HM"  #Start State
 #input_goal_state = "ABC DEF GHM IJKL" #Goal State
 
-# init < goal example
+# test 4: init < goal example
 #input_init_state = "ABC DEF GHM IJKL" #Start State
 #input_goal_state = "BI ACDE FKL GJ HM"  #Goal State
 
-# deadlock example
+# test 5: deadlock example
 #input_init_state = "AC B"  #Start State
 #input_goal_state = "ABC" #Goal State
 
