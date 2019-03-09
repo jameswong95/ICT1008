@@ -21,9 +21,9 @@ import table
 #input_goal_state = "CBA FED" #Goal State
 
 # test 4: init < goal example
-# not working
-#input_init_state = "ABC DEF GHM IJKL" #Start State
-#input_goal_state = "BI ACDE FKL GJ HM"  #Goal State
+# working
+#input_init_state = "FEDCBA" #Start State
+#input_goal_state = "CBA DEF"  #Goal State
 
 # test 5: deadlock example
 # not working

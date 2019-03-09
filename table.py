@@ -42,16 +42,13 @@ def alt(init_stacks, goal_stacks):
         position = 0  # start from bottom of stack
         temp_stack_counter = i
 
-        temp_stack_size = temp_stacks[i].size()
-        goal_block_size = goal_stacks[i].size()
-
         #while cmp(temp_stacks[i].toString(), goal_stacks[i].toString()) is not 0:
-        # while the items in temp stack and goal stack are not the same..
+        # while the items in temp stack and goal stack are not the same
         while (temp_stacks[i].toString() > goal_stacks[i].toString()) - \
                 (temp_stacks[i].toString() < goal_stacks[i].toString()) is not 0:
 
                 # if position index is > the amount of items in the stack
-                if position > temp_stack_size-1:
+                if position > temp_stacks[i].size()-1:
                     temp_stack_counter += 1
                     # check block at the btm of goal stack & compare to btm of temp stack
                     goal_block_atPos = goal_stacks[i].peekAt(position)
@@ -85,8 +82,10 @@ def alt(init_stacks, goal_stacks):
                                                          i, stackMovement)
 
                     position += 1
-                    temp_stack_size = temp_stacks[i].size()
 
+                # if position index is > the amount of items in goal stack
+                elif position > goal_stacks[i].size()-1:
+                    break
                 else:
                     # check block at the btm of goal stack & compare to btm of temp stack
                     goal_block_atPos = goal_stacks[i].peekAt(position)
@@ -151,7 +150,6 @@ def alt(init_stacks, goal_stacks):
                                                              i, stackMovement)
 
                     position += 1
-                    temp_stack_size = temp_stacks[i].size()
 
         if goal_size is i+1:
             temp_size = len(temp_stacks)
@@ -335,6 +333,7 @@ def moveClearGoalBlock(arm, temp_stacks, goal_block_status, goal_block_atPos, st
         temp_stacks = arm.action_unstack(goal_block_atPos, temp_stacks, onBlock)
         action = "Unstack block " + goal_block_atPos + " from block " + onBlock
         addStackMovement(stackMovement, arm.action_counter, action, arm.onHand, temp_stacks)
+
         # putting block down
         if temp_stacks[stackIndex].isEmpty():
                 temp_stacks[stackIndex] = \
