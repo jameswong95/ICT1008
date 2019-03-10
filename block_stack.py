@@ -45,7 +45,7 @@ class Stack:
         string1 = ""
         size = len(self.data)
         if size > 0:
-            for i in range(size):
+            for i in reversed(xrange(size)):
                     string1 += str(self.data[i])
         elif size is 0:
             string1 += " "
