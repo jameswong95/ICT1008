@@ -53,8 +53,8 @@ noChange = "No Change(s) required as Start state and End state are the same."
 def main():
     # Program starts here!
     print(welcome)
-    start_state = input(startStateReq)
-    final_state = input(endStateReq)
+    start_state = str(input(startStateReq))
+    final_state = str(input(endStateReq))
 
     # Check for user input
     # if there is an issue with duplicate numbers/alphabets
@@ -72,8 +72,8 @@ def main():
             userSelection = input()
 
             if str(userSelection) == "1":  # [1] James's Algorithm Solution
-                start_state = start_state.split(" ")
-                final_state = final_state.split(" ")
+                start_state = str(start_state).split(" ")
+                final_state = str(final_state).split(" ")
                 solutionOne(start_state, final_state)
             elif str(userSelection) == "2":  # [2] Algorithm Solution
                 solutionTwo(start_state, final_state)
@@ -82,7 +82,7 @@ def main():
 
             # Offer user to repeat the program
             print(goBackMaybe)
-            userSelection = input()
+            userSelection = raw_input() # Changed from original to Python 2.
             if userSelection == "y" or userSelection == 'Y':
                 main()
             sys.exit
@@ -90,7 +90,7 @@ def main():
 # Check if there are repeated character in String
 # return 'True' when there are repeating characters
 def checkForRep(toCheck):
-    removeSpaces = toCheck.replace(" ","")
+    removeSpaces = str(toCheck).replace(" ","")
     seen = set()
     for x in removeSpaces:
         if x not in seen:
@@ -423,8 +423,8 @@ def solutionOne(start_state, final_state):
 
 def solutionTwo(start_state, final_state):
     # Enter Solution 2 here
-    start_table = table.createTable(start_state)
-    goal_table = table.createTable(final_state)
+    start_table = table.createTable(str(start_state))
+    goal_table = table.createTable(str(final_state))
 
     dict = table.alt(start_table, goal_table)
 
