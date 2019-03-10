@@ -1,7 +1,12 @@
 import sys
+import table
+
 # Edit log(s) :
 # 1 Edited block_problem.py for a basic UI
 #   [IMPORTANT] Refactored code to python 3.6
+# 2 (10/03/2019)
+# - Implemented algo 2
+# - Move split string to before algo 1 is being called.
 
 # Test cases:
 # final_state = '123'
@@ -57,8 +62,8 @@ def main():
         print(repFound)
         main() # Throws user back to main to repeat inputs
     else:
-        start_state = start_state.split(" ")
-        final_state = final_state.split(" ")
+        #start_state = start_state.split(" ")
+        #final_state = final_state.split(" ")
 
         # Check if goal state is the same as start state.
         if checkStartnFinal(start_state, final_state) is True:
@@ -66,10 +71,12 @@ def main():
             print(selectionChoice)
             userSelection = input()
 
-            if userSelection == "1":  # [1] James's Algorithm Solution
+            if str(userSelection) == "1":  # [1] James's Algorithm Solution
+                start_state = start_state.split(" ")
+                final_state = final_state.split(" ")
                 solutionOne(start_state, final_state)
-            elif userSelection == "2":  # [2] Algorithm Solution
-                pass
+            elif str(userSelection) == "2":  # [2] Algorithm Solution
+                solutionTwo(start_state, final_state)
             else:
                 print(genericError)
 
@@ -414,9 +421,16 @@ def solutionOne(start_state, final_state):
                 print(steps.index(i), "     : ", i['name'], i['params'][0], "to", i['params'][2])
 
 
-def solutionTwo():
+def solutionTwo(start_state, final_state):
     # Enter Solution 2 here
-    pass
+    start_table = table.createTable(start_state)
+    goal_table = table.createTable(final_state)
+
+    dict = table.alt(start_table, goal_table)
+
+    # print output
+    for key, value in dict.items():
+        print("Move {0}: {1}".format(key, value))
 
 # initialize main method
 main()

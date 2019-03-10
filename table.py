@@ -132,9 +132,10 @@ def alt(init_stacks, goal_stacks):
                                                              goal_block_atPos, i, stackMovement)
                         elif goal_block_status['clear'] is 'False':
 
+                            # go up to the next block
+                            indexAboveGoal = goal_block_status['blockIndex'] + 1
                             while goal_block_status['clear'] is 'False':
-                                # go up to the next block
-                                indexAboveGoal = goal_block_status['blockIndex']+1
+
                                 blockOnGoal = temp_stacks[goal_block_status['stackIndex']].peekAt(indexAboveGoal)
                                 blockOnGoal_status = searchForValue(temp_stacks, blockOnGoal)
                                 if blockOnGoal_status['clear'] is 'False':
@@ -143,6 +144,7 @@ def alt(init_stacks, goal_stacks):
                                     temp_stacks = moveClearBlock(arm, temp_stacks, blockOnGoal_status,
                                                                  goal_block_status,goal_block_status['stackIndex'],
                                                                  blockOnGoal, i, stackMovement)
+                                    indexAboveGoal -= 1
 
                                 goal_block_status = searchForValue(temp_stacks, goal_block_atPos)
 
@@ -243,6 +245,14 @@ def moveClearBlock(arm, temp_stacks, temp_block_status, goal_block_status, goal_
         # putting block down
         if nextStack is not goal_block_stackIndex and nextStack is not goal_block_status['stackIndex']:
 
+            if nextStack is not goal_block_stackIndex and nextStack is not goal_block_status['stackIndex']:
+                if nextStack > len(temp_stacks) - 1:
+                    if stackIndex is 0:
+                        addStack(temp_stacks)
+                        nextStack = len(temp_stacks) - 1
+                    elif stackIndex > 0:
+                        nextStack = stackIndex - 1
+
             # putting block on table if next stack is empty
             if temp_stacks[nextStack].isEmpty():
                 temp_stacks[nextStack] = arm.action_putdown(temp_block_atPos, temp_stacks[nextStack])
@@ -263,12 +273,12 @@ def moveClearBlock(arm, temp_stacks, temp_block_status, goal_block_status, goal_
                 elif stackIndex > 0:
                     nextStack = stackIndex - 1
 
-            nextStack_topBlock = temp_stacks[nextStack].peek()
-            if nextStack_topBlock is False:
+            if temp_stacks[nextStack].isEmpty():
                 temp_stacks[nextStack] = arm.action_putdown(temp_block_atPos, temp_stacks[nextStack])
                 action = "Put down block " + temp_block_atPos + " on table"
                 addStackMovement(stackMovement, arm.action_counter, action, arm.onHand, temp_stacks)
             else:
+                nextStack_topBlock = temp_stacks[nextStack].peek()
                 temp_stacks = arm.action_stack(temp_block_atPos, temp_stacks, nextStack_topBlock)
                 action = "Stack block " + temp_block_atPos + " on block " + nextStack_topBlock
                 addStackMovement(stackMovement, arm.action_counter, action, arm.onHand, temp_stacks)
@@ -285,6 +295,13 @@ def moveClearBlock(arm, temp_stacks, temp_block_status, goal_block_status, goal_
 
         # putting block down
         if nextStack is not goal_block_stackIndex and nextStack is not goal_block_status['stackIndex']:
+            if nextStack > len(temp_stacks) - 1:
+                if stackIndex is 0:
+                    addStack(temp_stacks)
+                    nextStack = len(temp_stacks) - 1
+                elif stackIndex > 0:
+                    nextStack = stackIndex - 1
+
             if temp_stacks[nextStack].isEmpty():
                 temp_stacks[nextStack] = arm.action_putdown(temp_block_atPos, temp_stacks[nextStack])
                 action = "Put down block " + temp_block_atPos + " on table"
@@ -298,7 +315,11 @@ def moveClearBlock(arm, temp_stacks, temp_block_status, goal_block_status, goal_
             nextStack += 1
 
             if nextStack > len(temp_stacks) - 1:
-                nextStack = stackIndex - 1
+                if stackIndex is 0:
+                    addStack(temp_stacks)
+                    nextStack = len(temp_stacks) - 1
+                elif stackIndex > 0:
+                    nextStack = stackIndex - 1
 
             if temp_stacks[nextStack].isEmpty():
                 temp_stacks[nextStack] = arm.action_putdown(temp_block_atPos, temp_stacks[nextStack])

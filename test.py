@@ -7,8 +7,8 @@ import table
 
 # test 1: simple example
 # working
-#input_init_state = "CA B D"  #Start State
-#input_goal_state = "DCBA" #Goal State
+input_init_state = "CA B D"  #Start State
+input_goal_state = "DCBA" #Goal State
 
 # test 2: same amount of stacks example
 # working
@@ -42,22 +42,22 @@ import table
 #input_init_state = '2 3 16 5 4'
 
 # test 3
-# not working
+# working
 #input_goal_state = '1 3 2 6 54'
 #input_init_state = '23 1 654'
 
 # test 4
-# not working
+# working
 #input_goal_state = '6 32 451'
 #input_init_state = '2 31654'
 
 # test 5
-# not working
+# working
 #input_goal_state = '6 32 45 1'
 #input_init_state = '2 316 54'
 
 # test 6
-# not working
+# working
 #input_goal_state = '6 3245 1'
 #input_init_state = '2 316 54'
 
