@@ -257,12 +257,21 @@ def moveClearBlock(arm, temp_stacks, temp_block_status, goal_block_status, goal_
             nextStack += 1
 
             if nextStack > len(temp_stacks) - 1:
-                nextStack = stackIndex - 1
+                if stackIndex is 0:
+                    addStack(temp_stacks)
+                    nextStack = len(temp_stacks) - 1
+                elif stackIndex > 0:
+                    nextStack = stackIndex - 1
 
             nextStack_topBlock = temp_stacks[nextStack].peek()
-            temp_stacks = arm.action_stack(temp_block_atPos, temp_stacks, nextStack_topBlock)
-            action = "Stack block " + temp_block_atPos + " on block " + nextStack_topBlock
-            addStackMovement(stackMovement, arm.action_counter, action, arm.onHand, temp_stacks)
+            if nextStack_topBlock is False:
+                temp_stacks[nextStack] = arm.action_putdown(temp_block_atPos, temp_stacks[nextStack])
+                action = "Put down block " + temp_block_atPos + " on table"
+                addStackMovement(stackMovement, arm.action_counter, action, arm.onHand, temp_stacks)
+            else:
+                temp_stacks = arm.action_stack(temp_block_atPos, temp_stacks, nextStack_topBlock)
+                action = "Stack block " + temp_block_atPos + " on block " + nextStack_topBlock
+                addStackMovement(stackMovement, arm.action_counter, action, arm.onHand, temp_stacks)
 
     elif temp_block_status['on'] is "block":
 

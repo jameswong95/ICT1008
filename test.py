@@ -26,13 +26,13 @@ import table
 #input_goal_state = "CBA DEF"  #Goal State
 
 # test 5: deadlock example
-# not working
+# working
 #input_init_state = "AC B"  #Start State
-#input_goal_state = "ABC" #Goal State
+#input_goal_state = "CBA" #Goal State
 
 # alt test case from blocks_problem with UI.py
 # test 1: deadlock
-# not working
+# working
 #input_goal_state = '123'
 #input_init_state = '1 32'
 
@@ -67,7 +67,7 @@ import table
 #input_init_state = '2 316 54'
 
 # test 8
-# not working
+# working
 #input_goal_state = '63 24 5 1'
 #input_init_state = '231654'
 
