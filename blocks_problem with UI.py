@@ -430,7 +430,9 @@ def solutionTwo(start_state, final_state):
 
     # print output
     for key, value in dict.items():
-        print("Move {0}: {1}".format(key, value))
+        print("Move {0}:".format(key))
+        for a, b in value.items():
+            print("{0}: {1}".format(a, b))
 
 # initialize main method
 main()
