@@ -1,6 +1,7 @@
 from block_stack import *
 from functions import *
 
+
 def createTable(table):
     stack_list = table.split()  # split the strings
     numOfStack = len(stack_list)  # set the number of stacks required

@@ -1,5 +1,6 @@
 import sys
 import table
+import time
 
 # Edit log(s) :
 # 1 Edited block_problem.py for a basic UI
@@ -53,8 +54,8 @@ noChange = "No Change(s) required as Start state and End state are the same."
 def main():
     # Program starts here!
     print(welcome)
-    start_state = str(input(startStateReq))
-    final_state = str(input(endStateReq))
+    start_state = str(raw_input(startStateReq))
+    final_state = str(raw_input(endStateReq))
 
     # Check for user input
     # if there is an issue with duplicate numbers/alphabets
@@ -321,6 +322,7 @@ def solutionOne(start_state, final_state):
                     if arm[0] == new_value:
                         stack.pop()
                 elif stack[-1]['name'] == 'armempty':
+                    bitch = stack[-1]
                     current_stack = stack[-1]
                     temp_stack = {}
                     new_value = current_stack['params']
@@ -360,7 +362,7 @@ def solutionOne(start_state, final_state):
                 arm.append(new_value[0])
                 stack.pop()
             elif new_name == 'pickup':
-                arm.append(new_value)
+                arm.append(new_value[0])
                 for i in temp_start_stack:
                     if i['name'] == 'clear' and i['params'] == new_value:
                         ele_found = i
@@ -373,6 +375,7 @@ def solutionOne(start_state, final_state):
                     if i['name'] == 'on' and i['params'][0] == new_value:
                         ele_found = i
                         temp_start_stack.remove(i)
+
                 stack.pop()
                 steps.append(current_stack)
             elif new_name == 'stack':
@@ -426,13 +429,17 @@ def solutionTwo(start_state, final_state):
     start_table = table.createTable(str(start_state))
     goal_table = table.createTable(str(final_state))
 
+    start = time.clock()
     dict = table.alt(start_table, goal_table)
+    completed = time.clock() - start
 
     # print output
     for key, value in dict.items():
-        print("Move {0}:".format(key))
+        print("Move {0}".format(key))
         for a, b in value.items():
             print("{0}: {1}".format(a, b))
+            break
+    print "Time Completed in: ", completed
 
 # initialize main method
 main()
