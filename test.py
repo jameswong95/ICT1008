@@ -1,47 +1,87 @@
 import table
-import time
-
 
 #input_start_state = raw_input("Enter start state: ")
 #input_goal_state = raw_input("Enter goal state: ")
 
-input_init_state = "B ACDE F G H"  #Start State
-input_goal_state = "DC BA F E H G" #Goal State
+# <-- Top | Bottom -->
 
+# test 1: simple example
+# working
+input_init_state = "CA B D"  #Start State
+input_goal_state = "DCBA" #Goal State
+
+# test 2: same amount of stacks example
+# working
+#input_init_state = "CA FB DE"  #Start State
+#input_goal_state = "BA DC FE" #Goal State
+
+# test 3: init > goal example
+# working
+#input_init_state = "AE FB CD"  #Start State
+#input_goal_state = "CBA FED" #Goal State
+
+# test 4: init < goal example
+# working
+#input_init_state = "FEDCBA" #Start State
+#input_goal_state = "CBA DEF"  #Goal State
+
+# test 5: deadlock example
+# working
+#input_init_state = "AC B"  #Start State
+#input_goal_state = "CBA" #Goal State
+
+# alt test case from blocks_problem with UI.py
+# test 1: deadlock
+# working
+#input_goal_state = '123'
+#input_init_state = '1 32'
+
+# test 2
+# working
+#input_goal_state = '63 245 1'
+#input_init_state = '2 3 16 5 4'
+
+# test 3
+# working
+#input_goal_state = '1 3 2 6 54'
+#input_init_state = '23 1 654'
+
+# test 4
+# working
+#input_goal_state = '6 32 451'
+#input_init_state = '2 31654'
+
+# test 5
+# working
+#input_goal_state = '6 32 45 1'
+#input_init_state = '2 316 54'
+
+# test 6
+# working
+#input_goal_state = '6 3245 1'
+#input_init_state = '2 316 54'
+
+# test 7
+# working
+#input_goal_state = '63 245 1'
+#input_init_state = '2 316 54'
+
+# test 8
+# working
+#input_goal_state = '63 24 5 1'
+#input_init_state = '231654'
 
 if input_init_state is input_goal_state:
     print("Start state and goal state are the same")
 else:
     # create table obj
     # create the tables with stacks and blocks
-    final_size = len(input_goal_state.split())
-    start_table = table.createTable(input_init_state, final_size)
-    goal_table = table.createTable(input_goal_state, final_size)
-
-    print start_table
-
-    # algorithm 1
-    a1_start = time.time()  # start timer
+    start_table = table.createTable(input_init_state)
+    goal_table = table.createTable(input_goal_state)
 
     # code here
-    # table.classicalPlanning(start_table, goal_table)
+    dict = table.alt(start_table, goal_table)
 
-    a1_end = time.time()  # end timer
-    a1_timeTaken = a1_end - a1_start  # total time taken
-
-    # algorithm 2
-    a2_start = time.time()  # start timer
-
-    # code here
-
-    a2_end = time.time()  # end timer
-    a2_timeTaken = a2_end - a2_start  # total time taken
-
-    if a1_timeTaken > a2_timeTaken:
-        print("A2 is the better algorithm")
-    elif a2_timeTaken > a1_timeTaken:
-        print("A1 is the better algorithm")
-    else:
-        print("They both took the same amount of time wtf?")
-
+    for key, value in dict.items():
+        print("Move {0}: {1}".format(key, value))
 
