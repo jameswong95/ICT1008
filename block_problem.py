@@ -1,5 +1,5 @@
 "Example: left is for 10 digits"
-
+import time
 #Able to work:
 # final_state = '123'
 # start_state = '1 32'
@@ -8,9 +8,9 @@
 # start_state = '2 3 16 5 4'
 
 #Current Stack
-final_state = '123'
-start_state = '1 32'
-
+final_state = 'FGHJ1234567890ABC'
+# final_state = '321'
+start_state = 'ABC0987654321FGHJ'
 
 final_state = final_state.split(" ")
 start_state = start_state.split(" ")
@@ -93,6 +93,7 @@ if start_state == final_state:
 #     print "Different number of blocks in start state and end state"
 else:
     while len(stack) >0:
+        start = time.clock()
         list_counter = 0
         combine_tstack = []
         unstackfrom =""
@@ -327,4 +328,6 @@ for i in steps:
         else:
             print i['name'], i['params'][0], "to", i['params'][2]
     # print temp_start_stack
+print "Time Completed in: ", time.clock()-start
+
 # | A , B | |C |
