@@ -184,6 +184,7 @@ def solutionOne(start_state, final_state):
                         temp_start_stack.append(temp_stack)
         counter_test = 0
 
+    start = time.clock()
     while len(stack) > 0:
         list_counter = 0
         combine_tstack = []
@@ -390,7 +391,8 @@ def solutionOne(start_state, final_state):
                 temp_start_stack.append(temp1_stack)
                 stack.pop()
                 steps.append(current_stack)
-                arm.pop()
+                if len(arm) > 0:
+                    arm.pop()
             elif new_name == 'putdown':
                 temp_stack = {}
                 temp1_stack = {}
@@ -410,18 +412,20 @@ def solutionOne(start_state, final_state):
                 arm.pop()
         counter += 1
 
+    completed = time.clock() - start
+
     # print "Steps: ",steps
-    print("\nSteps  :  Action(s)")
     for i in steps:
         if i['name'] == 'putdown':
-            print(steps.index(i), "     : ", i['name'], ",", i['params'], "on table")
+            print i['name'], ",", i['params'], "on table"
         elif i['name'] == 'pickup':
-            print(steps.index(i), "     : ", i['name'], ",", i['params'], "from table")
+            print i['name'], ",", i['params'], "from table"
         else:
             if i['name'] == 'unstack':
-                print(steps.index(i), "     : ", i['name'], i['params'][0], "from", i['params'][2])
+                print i['name'], i['params'][0], "from", i['params'][2]
             else:
-                print(steps.index(i), "     : ", i['name'], i['params'][0], "to", i['params'][2])
+                print i['name'], i['params'][0], "to", i['params'][2]
+    print "Time Completed in: ", completed
 
 
 def solutionTwo(start_state, final_state):
