@@ -129,6 +129,7 @@ def solutionTwo(start_state, final_state):
         print("Move {0}".format(key))
         for a, b in value.items():
             print("{0}: {1}".format(a, b))
+            # remove break to print held block & block position
             break
     print "Time Completed in: ", completed
 
